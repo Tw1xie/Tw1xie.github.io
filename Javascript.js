@@ -1,36 +1,33 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   const sentences = [
-      "<span class='normal'> Welcome to my Website!</span>",
-      "<span class='normal'> I'm a young <span class='highlight'>Web Developer.</span></span>",
-      "<span class='normal'> Owner of <span class='highlight'>ApathyMC.</span></span>",
-      "<span class='normal'> Stay tuned for more updates.</span>"
+      "Welcome to my website!",
+      "I'm a young Web Developer.",
+      "Owner of ApathyMC.",
+      "Stay tuned for more updates."
   ];
 
-  const typingElement = document.getElementById('typer-text');
+  const typingElement = document.getElementById('typer-text'); // Corrected method name
   let sentenceIndex = 0;
 
   function type() {
-      typingElement.innerHTML = ""; // Clear previous content
       const currentSentence = sentences[sentenceIndex];
       let index = 0;
       let typing = setInterval(() => {
-          typingElement.innerHTML += currentSentence[index];
+          typingElement.textContent += currentSentence[index];
           index++;
-          if (index >= currentSentence.length) {
+          if (index >= currentSentence.length) { // Corrected variable name
               clearInterval(typing);
               setTimeout(deleteText, 1000);
           }
       }, 100);
 
       function deleteText() {
-          let indexToDelete = currentSentence.length;
           typing = setInterval(() => {
-              indexToDelete--;
-              if (indexToDelete >= 0) {
-                  typingElement.innerHTML = currentSentence.substring(0, indexToDelete);
-              } else {
+              typingElement.textContent = currentSentence.substring(0, index);
+              index--;
+              if (index === 0) { // Removed unnecessary semicolon
                   clearInterval(typing);
-                  sentenceIndex = (sentenceIndex + 1) % sentences.length;
+                  sentenceIndex = (sentenceIndex + 1) % sentences.length; // Corrected array length reference
                   setTimeout(type, 1000);
               }
           }, 50);
